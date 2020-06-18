@@ -13,5 +13,7 @@
   #However, the prometheus still havs no authority to gain data from istio or access istio.
   
  input: kubectl create -f rbac.yaml # add endpoint
- input: kubectl create -f service
+ input: kubectl create -f serviceMonitoring.yaml # set up monitoring settings
+ 
+ #The two orders above should be done after istio deployment.
   
