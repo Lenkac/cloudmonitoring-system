@@ -1,5 +1,6 @@
   #The prometheus file is from a integrated project built by coreos.
   #So the first step is to clone the project through github.
+  
   input: git clone https://github.com/coreos/kube-prometheus.git
   
   #For the difficulty to change the orgin codes in the project, we have to delete all the file about grafana in that project(The grafana of that project can't expose its own database.).
@@ -8,6 +9,7 @@
   
   #deploy the crd and namespace of prometheus
   input: kubectl create -f manifests/setup
+  
   #deploy all the other components like alertmanager, adapter and so on.
   input: kubectl create -f manifests/         
   
