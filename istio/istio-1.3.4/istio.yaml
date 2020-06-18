@@ -1,0 +1,163 @@
+NAME:   istio
+LAST DEPLOYED: Fri Jun  5 21:49:12 2020
+NAMESPACE: istio-system
+STATUS: DEPLOYED
+
+RESOURCES:
+==> v1/ClusterRole
+NAME                                 AGE
+istio-reader                         13s
+istio-pilot-istio-system             13s
+istio-galley-istio-system            13s
+istio-mixer-istio-system             13s
+istio-citadel-istio-system           13s
+istio-sidecar-injector-istio-system  13s
+
+==> v1/ClusterRoleBinding
+NAME                                                    AGE
+istio-multi                                             13s
+istio-pilot-istio-system                                13s
+istio-galley-admin-role-binding-istio-system            13s
+istio-mixer-admin-role-binding-istio-system             13s
+istio-citadel-istio-system                              13s
+istio-sidecar-injector-admin-role-binding-istio-system  13s
+
+==> v1/ConfigMap
+NAME                             DATA  AGE
+istio                            2     13s
+istio-galley-configuration       1     13s
+istio-security-custom-resources  2     13s
+istio-sidecar-injector           2     13s
+
+==> v1/Deployment
+NAME                    READY  UP-TO-DATE  AVAILABLE  AGE
+istio-citadel           0/1    1           0          13s
+istio-galley            0/1    1           0          13s
+istio-ingressgateway    0/1    1           0          13s
+istio-pilot             0/1    1           0          13s
+istio-policy            0/1    1           0          13s
+istio-sidecar-injector  0/1    1           0          13s
+istio-telemetry         0/1    1           0          13s
+
+==> v1/Pod(related)
+NAME                                   READY  STATUS             RESTARTS  AGE
+istio-citadel-59574746c-s8ctb          0/1    ContainerCreating  0         12s
+istio-galley-7c6786768c-q2bq9          0/1    ContainerCreating  0         12s
+istio-ingressgateway-7b76ff7c54-qnjbb  0/1    Running            0         12s
+istio-pilot-d495f7b-wtdv8              0/2    ContainerCreating  0         12s
+istio-policy-5bd84dbc46-2th5v          0/2    ContainerCreating  0         12s
+istio-sidecar-injector-949f4564-wzpvv  0/1    ContainerCreating  0         12s
+istio-telemetry-68766475bc-mt7pb       0/2    ContainerCreating  0         12s
+
+==> v1/Role
+NAME                      AGE
+istio-ingressgateway-sds  13s
+
+==> v1/RoleBinding
+NAME                      AGE
+istio-ingressgateway-sds  13s
+
+==> v1/Service
+NAME                    TYPE          CLUSTER-IP      EXTERNAL-IP  PORT(S)                                                                                                                                     AGE
+istio-citadel           ClusterIP     10.104.251.175  <none>       8060/TCP,15014/TCP                                                                                                                          13s
+istio-galley            ClusterIP     10.101.55.69    <none>       443/TCP,15014/TCP,9901/TCP                                                                                                                  13s
+istio-ingressgateway    LoadBalancer  10.110.42.18    <pending>    15020:31715/TCP,80:31380/TCP,443:31390/TCP,31400:31400/TCP,15029:31764/TCP,15030:30706/TCP,15031:30465/TCP,15032:32544/TCP,15443:30954/TCP  13s
+istio-pilot             ClusterIP     10.111.42.225   <none>       15010/TCP,15011/TCP,8080/TCP,15014/TCP                                                                                                      13s
+istio-policy            ClusterIP     10.99.194.179   <none>       9091/TCP,15004/TCP,15014/TCP                                                                                                                13s
+istio-sidecar-injector  ClusterIP     10.110.159.209  <none>       443/TCP,15014/TCP                                                                                                                           13s
+istio-telemetry         ClusterIP     10.104.189.159  <none>       9091/TCP,15004/TCP,15014/TCP,42422/TCP                                                                                                      13s
+
+==> v1/ServiceAccount
+NAME                                    SECRETS  AGE
+istio-citadel-service-account           1        13s
+istio-galley-service-account            1        13s
+istio-ingressgateway-service-account    1        13s
+istio-mixer-service-account             1        13s
+istio-multi                             1        13s
+istio-pilot-service-account             1        13s
+istio-security-post-install-account     1        13s
+istio-sidecar-injector-service-account  1        13s
+
+==> v1alpha2/attributemanifest
+NAME        AGE
+istioproxy  12s
+kubernetes  12s
+
+==> v1alpha2/handler
+NAME           AGE
+kubernetesenv  12s
+prometheus     12s
+
+==> v1alpha2/instance
+NAME                  AGE
+attributes            12s
+requestcount          12s
+requestduration       12s
+requestsize           12s
+responsesize          12s
+tcpbytereceived       12s
+tcpbytesent           12s
+tcpconnectionsclosed  12s
+tcpconnectionsopened  12s
+
+==> v1alpha2/rule
+NAME                     AGE
+kubeattrgenrulerule      12s
+promhttp                 12s
+promtcp                  12s
+promtcpconnectionclosed  12s
+promtcpconnectionopen    12s
+tcpkubeattrgenrulerule   12s
+
+==> v1alpha3/DestinationRule
+NAME             HOST                                            AGE
+istio-policy     istio-policy.istio-system.svc.cluster.local     13s
+istio-telemetry  istio-telemetry.istio-system.svc.cluster.local  13s
+
+==> v1beta1/ClusterRole
+NAME                                      AGE
+istio-security-post-install-istio-system  13s
+
+==> v1beta1/ClusterRoleBinding
+NAME                                                   AGE
+istio-security-post-install-role-binding-istio-system  13s
+
+==> v1beta1/MutatingWebhookConfiguration
+NAME                    CREATED AT
+istio-sidecar-injector  2020-06-05T13:49:13Z
+
+==> v1beta1/PodDisruptionBudget
+NAME                    MIN AVAILABLE  MAX UNAVAILABLE  ALLOWED DISRUPTIONS  AGE
+istio-galley            1              N/A              0                    13s
+istio-ingressgateway    1              N/A              0                    13s
+istio-pilot             1              N/A              0                    13s
+istio-policy            1              N/A              0                    13s
+istio-sidecar-injector  1              N/A              0                    13s
+istio-telemetry         1              N/A              0                    13s
+
+==> v2beta1/HorizontalPodAutoscaler
+NAME                  REFERENCE                        TARGETS        MINPODS  MAXPODS  REPLICAS  AGE
+istio-ingressgateway  Deployment/istio-ingressgateway  <unknown>/80%  1        5        0         13s
+istio-pilot           Deployment/istio-pilot           <unknown>/80%  1        5        0         13s
+istio-policy          Deployment/istio-policy          <unknown>/80%  1        5        0         13s
+istio-telemetry       Deployment/istio-telemetry       <unknown>/80%  1        5        0         13s
+
+
+NOTES:
+Thank you for installing Istio.
+
+Your release is named Istio.
+
+To get started running application with Istio, execute the following steps:
+1. Label namespace that application object will be deployed to by the following command (take default namespace as an example)
+
+$ kubectl label namespace default istio-injection=enabled
+$ kubectl get namespace -L istio-injection
+
+2. Deploy your applications
+
+$ kubectl apply -f <your-application>.yaml
+
+For more information on running Istio, visit:
+https://istio.io/
+

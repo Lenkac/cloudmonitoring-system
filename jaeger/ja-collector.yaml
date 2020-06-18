@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: istio-tracing-collector
+  namespace: kube-system
+  labels:
+    app: istio-tracing-collector
+    chart: tracing-collector-0.1.0
+    release: istio
+    heritage: Tiller
+spec:
+  selector:
+    matchLabels:
+      app: istio-tracing-collector
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: istio-tracing-collector
+      annotations:
+        sidecar.istio.io/inject: "false"
+        scheduler.alpha.kubernetes.io/critical-pod: ""
+    spec:
+      containers:
+      - image: jaegertracing/jaeger-collector:latest
+        name: jaeger-collector
+        args: ["--config-file=/conf/collector.yaml"]
+        ports:
+        - containerPort: 14267
+          protocol: TCP
+        - containerPort: 14268
+          protocol: TCP
+        - containerPort: 9411
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: "/"
+            port: 14269
+        volumeMounts:
+        - name: jaeger-configuration-volume
+          mountPath: /conf
+        env:
+        - name: SPAN_STORAGE_TYPE
+          valueFrom:
+            configMapKeyRef:
+              name: jaeger-configuration
+              key: span-storage-type
+      volumes:
+        - configMap:
+            name: jaeger-configuration
+            items:
+              - key: collector
+                path: collector.yaml
+          name: jaeger-configuration-volume

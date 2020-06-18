@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: istio-tracing-query
+  namespace: kube-system
+  labels:
+    app: istio-tracing-query
+    chart: tracing-query-0.1.0
+    release: istio
+    heritage: Tiller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: istio-tracing-query
+  template:
+    metadata:
+      labels:
+        app: istio-tracing-query
+      annotations:
+        sidecar.istio.io/inject: "false"
+        scheduler.alpha.kubernetes.io/critical-pod: ""
+    spec:
+      containers:
+      - image: jaegertracing/jaeger-query:latest
+        name: jaeger-query
+        args: ["--config-file=/conf/query.yaml"]
+        ports:
+        - containerPort: 16686
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: "/"
+            port: 16687
+        volumeMounts:
+        - name: jaeger-configuration-volume
+          mountPath: /conf
+        env:
+        - name: SPAN_STORAGE_TYPE
+          valueFrom:
+            configMapKeyRef:
+              name: jaeger-configuration
+              key: span-storage-type
+      volumes:
+        - configMap:
+            name: jaeger-configuration
+            items:
+              - key: query
+                path: query.yaml
+          name: jaeger-configuration-volume

@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: istio-monitor  
+  labels:
+    app: prometheus-istio
+spec:
+  selector:
+    matchLabels: # 采集包含以下标签的 pod 的 /metrics 
+      app: mixer # 由于 istio 中 业务服务组件的 metrics 均汇总至 mixer 中，因此只采集该组件即可
+      istio: mixer
+  endpoints:
+  - port: prometheus # mixer 组件包含名为 prometheus 的端口，便于采集
+    interval: 10s    # 采集周期
+  namespaceSelector:
+    matchNames:
+    - istio-system   # 作用域
